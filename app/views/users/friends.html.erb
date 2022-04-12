@@ -1,5 +1,29 @@
 
 <h2> My Friends  </h2>
-<% @f.each do |f1| %>
-<%= f1.first_name %>
+
+<h3>search for friends</h3>
+<%= text_field_tag :friend, params[:friend], placeholder: "Name or email", autofocus: true, class: "form-control form-control-sm" %>
+<br><%= button_tag 'search' %>
+<% if !@f.empty?%>
+ <% @f.each do |f1| %>
+ <%= f1.first_name %><br>
+ <% end%>
+<% else%>
+  <%= "you are not following any of your friends" %>
 <% end %>
+
+<div class='search-area'>
+  <h3>Search Friends</h3>
+  <%= form_tag search_path, remote: true, method: :get do %>
+    <div class="form-group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= text_field_tag :friend, params[:friend], placeholder: "Name or email", autofocus: true, class: "form-control form-control-lg" %>
+      </div>
+      <div class="col-sm-3 no-left-padding">
+        <%= button_tag type: :submit, class: "btn btn-success" do %>
+
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
