@@ -1,0 +1,14 @@
+
+
+ <%= @user.first_name %> <%= @user.email %>
+ <br>
+ <% if current_user.not_friends_with?(@user.id) %><%= link_to 'add to friend',friendships_path(friend: @user),method: :post %>
+     <% else %>
+     Already friends
+     <% end %>
+
+     <% if !@tracked_stocks.empty? %>
+        <%= render 'stocks/list' %>
+     <% else %>
+     <p> This your not tracking any stocks </p>
+     <% end %>
