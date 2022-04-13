@@ -1,5 +1,48 @@
 
 <h2> My Friends  </h2>
-<% @f.each do |f1| %>
-<%= f1.first_name %>
+
+
+<% if !@f.empty?%>
+ <% @f.each do |f1| %>
+ <%= f1.first_name %> <%= f1.email %> <%= link_to 'View profile',user_path(f1) %> <%= link_to "remove",friendship_path(f1), method: :delete, data: {confirm: 'are you confirm'}  %><br>
+ <% end%>
+<% else%>
+  <%= "you are not following any of your friends" %>
 <% end %>
+
+
+
+<div id="friend-results">
+
+</div>
+<div class='search-area'>
+  <h3>Search Friends</h3>
+  <%= form_tag search_path, remote: true, method: :get do %>
+    <div class="form-group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= text_field_tag :friend, params[:friend], placeholder: "Name or email", autofocus: true, class: "form-control form-control-lg" %>
+      </div>
+      <div class="col-sm-3 no-left-padding">
+        <%= button_tag type: :submit, class: "btn btn-success" do %>
+
+        <% end %>
+      </div>
+    </div>
+<% end %>
+</div>
+
+<table>
+
+    <% @users.each do |user| %>
+  <tr>
+    <td><%= user.first_name %></td>
+    <td> <%= user.email%></td>
+    <td><% if current_user.not_friends_with?(user.id) %><%= link_to 'add to friend',friendships_path(friend: user),method: :post %>
+        <% else %>
+        Already friends
+        <% end %>
+    </td>
+</tr>
+    <% end %>
+
+</table>
